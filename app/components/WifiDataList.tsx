@@ -23,7 +23,7 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
 
   return (
     <div className="flex flex-col gap-3 p-3">
-      {data?.map((data) => <WifiDataCard data={data} key={data.macAddress} />)}
+      {data?.map((data, index) => <WifiDataCard data={data} key={index} />)}
     </div>
   );
 };

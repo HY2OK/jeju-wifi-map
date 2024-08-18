@@ -22,7 +22,7 @@ export default async function Home() {
           <div className="absolute right-6 top-6">
             <ModeToggle />
           </div>
-          <div className="h-full w-full rounded-lg border bg-card text-card-foreground shadow-sm"></div>
+          <div className="h-full w-full rounded-lg border text-card-foreground shadow-sm"></div>
         </main>
       </HydrationBoundary>
     </>

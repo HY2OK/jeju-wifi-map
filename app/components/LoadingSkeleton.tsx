@@ -3,7 +3,7 @@ import React from "react";
 
 const LoadingSkeleton = () => {
   return (
-    <Skeleton className="flex h-[178px] w-[262px] items-center justify-center">
+    <Skeleton className="flex h-[178px] w-[262px] items-center justify-center rounded-lg bg-background">
       <div role="status">
         <svg
           aria-hidden="true"

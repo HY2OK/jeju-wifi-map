@@ -1,16 +1,12 @@
 import axios from "axios";
+import { testData } from "./db";
 
 const searchData = async (address: string) => {
-  const response = await axios.get(
-    `https://open.jejudatahub.net/api/proxy/Dtb18ta1btbD1Da1a81aaDttab6tDabb/${process.env.NEXT_PUBLIC_WIFI_KEY}?addressDong=${address}`,
-    {
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    },
-  );
+  const response = await axios.get(`/api/wifi?addressDong=${address}`);
 
-  return response.data.data;
+  return response.data;
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  // return testData;
 };
 
 export default searchData;

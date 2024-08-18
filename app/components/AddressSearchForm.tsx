@@ -22,7 +22,7 @@ const AddressSearchForm = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const address = formData.get("address") as string;
-    mutation.mutate(address);
+    if (address !== "") mutation.mutate(address);
   };
 
   return (
