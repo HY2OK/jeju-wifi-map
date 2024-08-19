@@ -24,7 +24,9 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
   useEffect(() => {
     const dataIndex = dataList?.findIndex((data) => data.isClicked === true);
 
-    if (dataIndex && dataIndex !== -1) {
+    console.log(dataIndex);
+
+    if (dataIndex !== undefined && dataIndex !== -1) {
       cardRefs.current[dataIndex]?.scrollIntoView({
         behavior: "smooth",
         block: "start",
