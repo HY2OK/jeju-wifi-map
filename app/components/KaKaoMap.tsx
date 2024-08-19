@@ -26,6 +26,20 @@ const KaKaoMap = () => {
   });
   const [zoom, setZoom] = useState(10);
 
+  const cancelClicked = () => {
+    const cancel = dataList?.map((data) => {
+      if (data.isClicked) {
+        return {
+          ...data,
+          isClicked: false,
+        };
+      }
+      return data;
+    });
+
+    queryClient.setQueryData(["wifi"], cancel);
+  };
+
   useEffect(() => {
     const clickedData = dataList?.find((data) => data.isClicked);
     if (clickedData) {
@@ -72,7 +86,7 @@ const KaKaoMap = () => {
               yAnchor={1}
               xAnchor={0.5}
             >
-              <WifiDetailCard data={data} />
+              <WifiDetailCard data={data} cancelClicked={cancelClicked} />
             </CustomOverlayMap>
           )}
         </div>

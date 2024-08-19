@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -5,12 +7,23 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { WifiData } from "@/types/type";
+import { X } from "lucide-react";
 import React from "react";
 
-const WifiDetailCard = ({ data }: { data: WifiData }) => {
+const WifiDetailCard = ({
+  data,
+  cancelClicked,
+}: {
+  data: WifiData;
+  cancelClicked: () => void;
+}) => {
   return (
     <div className="relative top-[-40px]">
-      <Card className="w-full cursor-pointer border-2 border-primary bg-card">
+      <Card className="w-full border-2 border-primary bg-card">
+        <X
+          className="absolute right-2 top-2 h-5 w-5 cursor-pointer text-primary"
+          onClick={() => cancelClicked()}
+        />
         <CardHeader className="w-full font-bold">{data.apGroupName}</CardHeader>
         <CardContent className="flex flex-col gap-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
