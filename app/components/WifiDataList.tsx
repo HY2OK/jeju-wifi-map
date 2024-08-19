@@ -48,7 +48,6 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
         <WifiDataCard
           data={data}
           key={index}
-          index={index}
           handleClick={handleClick}
           ref={(el) => {
             cardRefs.current[index] = el!;

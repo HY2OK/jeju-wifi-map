@@ -1,6 +1,6 @@
 import wifiIcon from "@/asset/free-icon-wifi-4852997.png";
 import Image from "next/image";
-import AddressSearchForm from "./AddressSearchForm";
+import SearchForm from "./SearchForm";
 
 const SideBar = () => {
   return (
@@ -12,7 +12,7 @@ const SideBar = () => {
             제주 공공 와이파이
           </h1>
         </div>
-        <AddressSearchForm />
+        <SearchForm />
       </div>
     </div>
   );

@@ -11,12 +11,11 @@ import { forwardRef } from "react";
 
 interface WifiDataCardProps {
   data: WifiDetail;
-  index: number;
   handleClick: (data: WifiDetail) => void;
 }
 
 const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
-  ({ data, index, handleClick }, ref) => {
+  ({ data, handleClick }, ref) => {
     return (
       <Card
         ref={ref}

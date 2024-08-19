@@ -8,7 +8,7 @@ import searchData from "@/server/searchData";
 import WifiDataList from "./WifiDataList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const AddressSearchForm = () => {
+const SearchForm = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -43,4 +43,4 @@ const AddressSearchForm = () => {
   );
 };
 
-export default AddressSearchForm;
+export default SearchForm;
