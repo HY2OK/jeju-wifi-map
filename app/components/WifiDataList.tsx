@@ -4,7 +4,7 @@ import getWifiData from "@/server/getWifiData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import WifiDataCard from "./WifiDataCard";
 import LoadingSkeleton from "./LoadingSkeleton";
-import { WifiData } from "@/types/type";
+import { WifiDetail } from "@/types/type";
 import clickMarker from "@/lib/clickMarker";
 import { useEffect, useRef } from "react";
 
@@ -12,19 +12,17 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
   const queryClient = useQueryClient();
   const cardRefs = useRef<HTMLDivElement[]>([]);
 
-  const { data: dataList } = useQuery({
+  const { data } = useQuery({
     queryKey: ["wifi"],
     queryFn: getWifiData,
   });
 
-  const handleClick = (clickedData: WifiData, index: number) => {
+  const handleClick = (clickedData: WifiDetail) => {
     return clickMarker(queryClient, clickedData);
   };
 
   useEffect(() => {
-    const dataIndex = dataList?.findIndex((data) => data.isClicked === true);
-
-    console.log(dataIndex);
+    const dataIndex = data?.data?.findIndex((data) => data.isClicked === true);
 
     if (dataIndex !== undefined && dataIndex !== -1) {
       cardRefs.current[dataIndex]?.scrollIntoView({
@@ -32,7 +30,7 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
         block: "start",
       });
     }
-  }, [dataList]);
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -46,7 +44,7 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
 
   return (
     <div className="flex flex-col gap-3 p-3">
-      {dataList?.map((data, index) => (
+      {data?.data?.map((data, index) => (
         <WifiDataCard
           data={data}
           key={index}

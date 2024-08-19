@@ -6,13 +6,13 @@ import {
 } from "@/components/ui/card";
 import { truncateString } from "@/lib/truncateString";
 import { cn } from "@/lib/utils";
-import { WifiData } from "@/types/type";
+import { WifiDetail } from "@/types/type";
 import { forwardRef } from "react";
 
 interface WifiDataCardProps {
-  data: WifiData;
+  data: WifiDetail;
   index: number;
-  handleClick: (data: WifiData, index: number) => void;
+  handleClick: (data: WifiDetail) => void;
 }
 
 const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
@@ -24,7 +24,7 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
           `w-full cursor-pointer bg-card`,
           data.isClicked && "border-2 border-primary",
         )}
-        onClick={() => handleClick(data, index)}
+        onClick={() => handleClick(data)}
       >
         <CardHeader className="w-full font-bold">
           <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">

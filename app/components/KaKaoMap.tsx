@@ -15,7 +15,7 @@ import clickMarker from "@/lib/clickMarker";
 const KaKaoMap = () => {
   const queryClient = useQueryClient();
 
-  const { data: dataList } = useQuery({
+  const { data } = useQuery({
     queryKey: ["wifi"],
     queryFn: getWifiData,
   });
@@ -27,7 +27,7 @@ const KaKaoMap = () => {
   const [zoom, setZoom] = useState(10);
 
   const cancelClicked = () => {
-    const cancel = dataList?.map((data) => {
+    const cancel = data?.data.map((data) => {
       if (data.isClicked) {
         return {
           ...data,
@@ -37,11 +37,11 @@ const KaKaoMap = () => {
       return data;
     });
 
-    queryClient.setQueryData(["wifi"], cancel);
+    queryClient.setQueryData(["wifi"], { ...data, data: cancel });
   };
 
   useEffect(() => {
-    const clickedData = dataList?.find((data) => data.isClicked);
+    const clickedData = data?.data?.find((data) => data.isClicked);
     if (clickedData) {
       const changedData = {
         lat: Number(clickedData.latitude),
@@ -50,7 +50,7 @@ const KaKaoMap = () => {
       setCenter(() => changedData);
       setZoom(() => 6);
     }
-  }, [dataList]);
+  }, [data]);
 
   return (
     <Map
@@ -60,7 +60,7 @@ const KaKaoMap = () => {
       onZoomChanged={(map) => setZoom(map.getLevel())}
     >
       <ZoomControl position={"LEFT"} />
-      {dataList?.map((data, index) => (
+      {data?.data?.map((data, index) => (
         <div key={index} className="relative">
           <MapMarker
             position={{

@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { WifiData } from "@/types/type";
+import { WifiDetail } from "@/types/type";
 import { X } from "lucide-react";
 import React from "react";
 
@@ -14,7 +14,7 @@ const WifiDetailCard = ({
   data,
   cancelClicked,
 }: {
-  data: WifiData;
+  data: WifiDetail;
   cancelClicked: () => void;
 }) => {
   return (

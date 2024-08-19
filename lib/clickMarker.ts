@@ -1,11 +1,11 @@
 "use client";
 
-import { WifiData } from "@/types/type";
+import { WifiData, WifiDetail } from "@/types/type";
 import { QueryClient } from "@tanstack/react-query";
 
-const clickMarker = (queryClient: QueryClient, clickedData: WifiData) => {
-  queryClient.setQueryData(["wifi"], (oldData: WifiData[]) => {
-    return oldData.map((item) => {
+const clickMarker = (queryClient: QueryClient, clickedData: WifiDetail) => {
+  queryClient.setQueryData(["wifi"], (oldData: WifiData) => {
+    const newData = oldData.data.map((item) => {
       if (item.isClicked) return { ...item, isClicked: false };
 
       if (
@@ -17,6 +17,11 @@ const clickMarker = (queryClient: QueryClient, clickedData: WifiData) => {
 
       return item;
     });
+
+    return {
+      ...oldData,
+      data: newData,
+    };
   });
 };
 

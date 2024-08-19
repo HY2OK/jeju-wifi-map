@@ -1,4 +1,4 @@
-export interface WifiData {
+export interface WifiDetail {
   baseDate: string; // 설치 날짜
   macAddress: string; // MAC 주소 (암호화된 형태)
   apGroupName: string; // AP 그룹 이름 (설치 장소)
@@ -10,4 +10,10 @@ export interface WifiData {
   latitude: string; // 위도
   longitude: string; // 경도
   isClicked?: boolean;
+}
+
+export interface WifiData {
+  totCnt: number;
+  hasMore: boolean;
+  data: WifiDetail[];
 }
