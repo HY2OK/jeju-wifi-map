@@ -5,31 +5,32 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import WifiDataCard from "./WifiDataCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { WifiData } from "@/types/type";
+import clickMarker from "@/lib/clickMarker";
+import { useEffect, useRef } from "react";
 
 const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
   const queryClient = useQueryClient();
+  const cardRefs = useRef<HTMLDivElement[]>([]);
 
-  const { data } = useQuery({
+  const { data: dataList } = useQuery({
     queryKey: ["wifi"],
     queryFn: getWifiData,
   });
 
-  const handleClick = (clickedData: WifiData) => {
-    queryClient.setQueryData(["wifi"], (oldData: WifiData[]) => {
-      return oldData.map((item) => {
-        if (item.isClicked) return { ...item, isClicked: false };
-
-        if (
-          item.macAddress === clickedData.macAddress &&
-          item.apGroupName === clickedData.apGroupName
-        ) {
-          return { ...item, isClicked: true };
-        }
-
-        return item;
-      });
-    });
+  const handleClick = (clickedData: WifiData, index: number) => {
+    return clickMarker(queryClient, clickedData);
   };
+
+  useEffect(() => {
+    const dataIndex = dataList?.findIndex((data) => data.isClicked === true);
+
+    if (dataIndex && dataIndex !== -1) {
+      cardRefs.current[dataIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [dataList]);
 
   if (isLoading) {
     return (
@@ -41,12 +42,18 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
     );
   }
 
-  console.log(data);
-
   return (
     <div className="flex flex-col gap-3 p-3">
-      {data?.map((data, index) => (
-        <WifiDataCard data={data} key={index} handleClick={handleClick} />
+      {dataList?.map((data, index) => (
+        <WifiDataCard
+          data={data}
+          key={index}
+          index={index}
+          handleClick={handleClick}
+          ref={(el) => {
+            cardRefs.current[index] = el!;
+          }}
+        />
       ))}
     </div>
   );

@@ -1,5 +1,4 @@
 import wifiIcon from "@/asset/free-icon-wifi-4852997.png";
-import React from "react";
 import Image from "next/image";
 import AddressSearchForm from "./AddressSearchForm";
 

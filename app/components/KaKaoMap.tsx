@@ -1,7 +1,7 @@
 "use client";
 
 import getWifiData from "@/server/getWifiData";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   CustomOverlayMap,
   Map,
@@ -10,8 +10,11 @@ import {
 } from "react-kakao-maps-sdk";
 import WifiDetailCard from "./WifiDetailCard";
 import { useEffect, useState } from "react";
+import clickMarker from "@/lib/clickMarker";
 
 const KaKaoMap = () => {
+  const queryClient = useQueryClient();
+
   const { data: dataList } = useQuery({
     queryKey: ["wifi"],
     queryFn: getWifiData,
@@ -58,6 +61,7 @@ const KaKaoMap = () => {
               },
             }}
             title={data.apGroupName}
+            onClick={() => clickMarker(queryClient, data)}
           />
           {data.isClicked && (
             <CustomOverlayMap

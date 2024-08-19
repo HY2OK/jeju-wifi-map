@@ -8,7 +8,6 @@ import { WifiData } from "@/types/type";
 import React from "react";
 
 const WifiDetailCard = ({ data }: { data: WifiData }) => {
-  console.log(data);
   return (
     <div className="relative top-[-40px]">
       <Card className="w-full cursor-pointer border-2 border-primary bg-card">
