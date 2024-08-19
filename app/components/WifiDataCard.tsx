@@ -5,11 +5,24 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { truncateString } from "@/lib/truncateString";
+import { cn } from "@/lib/utils";
 import { WifiData } from "@/types/type";
 
-const WifiDataCard = ({ data }: { data: WifiData }) => {
+const WifiDataCard = ({
+  data,
+  handleClick,
+}: {
+  data: WifiData;
+  handleClick: (data: WifiData) => void;
+}) => {
   return (
-    <Card className="w-full bg-card">
+    <Card
+      className={cn(
+        `w-full cursor-pointer bg-card`,
+        data.isClicked && "border-2 border-primary",
+      )}
+      onClick={() => handleClick(data)}
+    >
       <CardHeader className="w-full font-bold">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
           {truncateString(data.apGroupName, 10)}
