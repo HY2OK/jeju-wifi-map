@@ -34,7 +34,7 @@ const KaKaoMap = () => {
         lng: Number(clickedData.longitude),
       };
       setCenter(() => changedData);
-      setZoom(() => 4);
+      setZoom(() => 6);
     }
   }, [dataList]);
 
