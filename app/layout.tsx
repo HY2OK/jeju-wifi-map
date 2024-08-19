@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/components/QueryProvider";
+import Script from "next/script";
 
 const nanum = Nanum_Gothic({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -33,6 +34,10 @@ export default function RootLayout({
         >
           <QueryProvider>{children}</QueryProvider>
         </ThemeProvider>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_MAP_KEY}&libraries=services,clusterer&autoload=false`}
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

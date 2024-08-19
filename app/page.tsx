@@ -6,6 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import getWifiData from "@/server/getWifiData";
+import KaKaoMap from "./components/KaKaoMap";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -19,10 +20,12 @@ export default async function Home() {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <SideBar />
         <main className="relative h-full w-full flex-1 p-3">
-          <div className="absolute right-6 top-6">
+          <div className="absolute right-6 top-6 z-10">
             <ModeToggle />
           </div>
-          <div className="h-full w-full rounded-lg border text-card-foreground shadow-sm"></div>
+          <div className="h-full w-full rounded-lg border shadow-sm">
+            <KaKaoMap />
+          </div>
         </main>
       </HydrationBoundary>
     </>

@@ -9,4 +9,5 @@ export interface WifiData {
   addressDetail: string; // 주소 (세부 주소)
   latitude: string; // 위도
   longitude: string; // 경도
+  isClicked?: boolean;
 }
