@@ -16,15 +16,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY } from "@/constant/constant";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Dispatch } from "react";
 
-const SearchFilter = () => {
-  const searchParams = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    searchParams?.get("category") || undefined,
-  );
+interface SearchFilterProps {
+  category: string | undefined;
+  setCategory: Dispatch<React.SetStateAction<string | undefined>>;
+}
 
+const SearchFilter = ({ category, setCategory }: SearchFilterProps) => {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
@@ -35,8 +34,8 @@ const SearchFilter = () => {
           <div className="flex w-full flex-col gap-3 p-2">
             <Select
               name="category"
-              value={selectedCategory}
-              onValueChange={(value) => setSelectedCategory(value)}
+              value={category}
+              onValueChange={(value) => setCategory(value)}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="카테고리 검색" />
