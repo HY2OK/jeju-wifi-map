@@ -8,11 +8,12 @@ import WifiDataList from "./WifiDataList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { WifiData } from "@/types/type";
 import getWifiData from "@/server/getWifiData";
+import SearchFilter from "./SearchFilter";
 
 const SearchForm = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<WifiData, unknown, { addressDong: string }>({
+  const mutation = useMutation<WifiData, unknown, Record<string, string>>({
     mutationFn: getWifiData,
     onSuccess: (result) => {
       queryClient.setQueryData(["wifi"], result);
@@ -23,19 +24,30 @@ const SearchForm = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const address = formData.get("address") as string;
-    if (address !== "") mutation.mutate({ addressDong: address });
+    const category = formData.get("category") as string;
+
+    const data: { addressDong?: string; category?: string } = {};
+
+    if (address) data.addressDong = address;
+    if (category && category !== "전체") data.category = category;
+
+    mutation.mutate(data);
   };
 
   return (
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center justify-center gap-2 p-3"
+        className="flex flex-col items-center justify-center gap-2 p-3"
       >
-        <Input type="text" name="address" placeholder="지역 검색" />
-        <Button className="h-10 w-10 p-2">
-          <Search className="h-5 w-5" />
-        </Button>
+        <div className="flex w-full items-center justify-center gap-2">
+          <Input type="text" name="address" placeholder="지역 검색" />
+          <Button className="h-9 w-9 p-2">
+            <Search className="h-5 w-5" />
+          </Button>
+        </div>
+
+        <SearchFilter />
       </form>
       <ScrollArea>
         <WifiDataList isLoading={mutation.isPending} />

@@ -35,10 +35,10 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
           <div className="text-xs">{data.addressDetail}</div>
         </CardContent>
         <CardFooter className="flex w-full">
-          <div className="text-xs text-muted-foreground">
+          <div className="flex-1 text-xs text-muted-foreground">
             등록일: {data.baseDate}
           </div>
-          <div className="ml-auto rounded-md bg-primary px-2 py-1 text-xs text-accent">
+          <div className="ml-auto min-w-max rounded-md bg-primary px-2 py-1 text-xs text-accent">
             {data.category}
           </div>
         </CardFooter>
