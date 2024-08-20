@@ -17,7 +17,7 @@ const KaKaoMap = () => {
 
   const { data } = useQuery({
     queryKey: ["wifi"],
-    queryFn: getWifiData,
+    queryFn: () => getWifiData(),
   });
 
   const [center, setCenter] = useState({

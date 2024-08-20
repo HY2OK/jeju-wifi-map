@@ -14,7 +14,7 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
 
   const { data } = useQuery({
     queryKey: ["wifi"],
-    queryFn: getWifiData,
+    queryFn: () => getWifiData(),
   });
 
   const handleClick = (clickedData: WifiDetail) => {
