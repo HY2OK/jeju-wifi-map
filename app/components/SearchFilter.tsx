@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
@@ -14,8 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY } from "@/constant/constant";
+import { useState } from "react";
 
 const SearchFilter = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined,
+  );
+
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
@@ -24,7 +31,11 @@ const SearchFilter = () => {
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex w-full flex-col gap-3 p-2">
-            <Select name="category">
+            <Select
+              name="category"
+              value={selectedCategory}
+              onValueChange={(value) => setSelectedCategory(value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="카테고리 검색" />
               </SelectTrigger>
