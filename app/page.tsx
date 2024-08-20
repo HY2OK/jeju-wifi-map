@@ -16,7 +16,7 @@ export default async function Home({
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(searchParams!),
+    queryFn: () => getWifiData(searchParams),
   });
 
   return (
