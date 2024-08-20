@@ -11,13 +11,16 @@ import {
 import WifiDetailCard from "./WifiDetailCard";
 import { useEffect, useState } from "react";
 import clickMarker from "@/lib/clickMarker";
+import { useSearchParams } from "next/navigation";
+import changeSearchParams from "@/lib/changeSearchParams";
 
 const KaKaoMap = () => {
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
 
   const { data } = useQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(),
+    queryFn: () => getWifiData(changeSearchParams(searchParams)),
   });
 
   const [center, setCenter] = useState({

@@ -8,11 +8,15 @@ import {
 import getWifiData from "@/server/getWifiData";
 import KaKaoMap from "./components/KaKaoMap";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: Record<string, string>;
+}) {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(),
+    queryFn: () => getWifiData(searchParams!),
   });
 
   return (

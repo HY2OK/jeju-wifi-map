@@ -16,11 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY } from "@/constant/constant";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const SearchFilter = () => {
+  const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined,
+    searchParams?.get("category") || undefined,
   );
 
   return (

@@ -7,14 +7,17 @@ import LoadingSkeleton from "./LoadingSkeleton";
 import { WifiDetail } from "@/types/type";
 import clickMarker from "@/lib/clickMarker";
 import { useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import changeSearchParams from "@/lib/changeSearchParams";
 
 const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
   const queryClient = useQueryClient();
   const cardRefs = useRef<HTMLDivElement[]>([]);
+  const searchParams = useSearchParams();
 
   const { data } = useQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(),
+    queryFn: () => getWifiData(changeSearchParams(searchParams)),
   });
 
   const handleClick = (clickedData: WifiDetail) => {

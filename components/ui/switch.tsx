@@ -10,7 +10,6 @@ const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
 >(({ className, ...props }, ref) => {
-  console.log(props);
   return (
     <SwitchPrimitives.Root
       className={cn(
