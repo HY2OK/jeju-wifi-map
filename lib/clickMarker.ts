@@ -9,6 +9,7 @@ const clickMarker = (queryClient: QueryClient, clickedData: WifiDetail) => {
       if (item.isClicked) return { ...item, isClicked: false };
 
       if (
+        item.baseDate === clickedData.baseDate &&
         item.macAddress === clickedData.macAddress &&
         item.apGroupName === clickedData.apGroupName
       ) {
