@@ -45,6 +45,16 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
     );
   }
 
+  if (data?.data.length === 0) {
+    return (
+      <div className="mt-5 flex w-full items-center justify-center text-sm">
+        해당 하는 결과가 없습니다.
+      </div>
+    );
+  }
+
+  console.log(data?.data);
+
   return (
     <div className="flex flex-col gap-3 px-3">
       {data?.data?.map((data, index) => (

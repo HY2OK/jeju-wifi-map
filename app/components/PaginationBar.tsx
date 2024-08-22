@@ -77,40 +77,44 @@ const PaginationBar = ({
   };
 
   return (
-    <Pagination>
-      <PaginationContent className="flex w-full items-center">
-        {!isNaN(totalPages) && (
-          <>
-            <PaginationItem>
-              <PageButton page={number - 1}>
-                <ChevronLeft className="h-4 w-4" />
-              </PageButton>
-            </PaginationItem>
+    <>
+      {data?.data.length !== 0 && (
+        <Pagination>
+          <PaginationContent className="flex w-full items-center">
+            {!isNaN(totalPages) && (
+              <>
+                <PaginationItem>
+                  <PageButton page={number - 1}>
+                    <ChevronLeft className="h-4 w-4" />
+                  </PageButton>
+                </PaginationItem>
 
-            <ScrollArea>
-              <div className="flex flex-1 gap-1 px-1 py-3">
-                {pageNumbers.map((page, index) => (
-                  <PaginationItem key={index}>
-                    {page === "..." ? (
-                      <PaginationEllipsis />
-                    ) : (
-                      <PageButton page={Number(page)}>{page}</PageButton>
-                    )}
-                  </PaginationItem>
-                ))}
-                <ScrollBar orientation="horizontal" />
-              </div>
-            </ScrollArea>
+                <ScrollArea>
+                  <div className="flex flex-1 gap-1 px-1 py-3">
+                    {pageNumbers.map((page, index) => (
+                      <PaginationItem key={index}>
+                        {page === "..." ? (
+                          <PaginationEllipsis />
+                        ) : (
+                          <PageButton page={Number(page)}>{page}</PageButton>
+                        )}
+                      </PaginationItem>
+                    ))}
+                    <ScrollBar orientation="horizontal" />
+                  </div>
+                </ScrollArea>
 
-            <PaginationItem>
-              <PageButton page={number + 1}>
-                <ChevronRight className="h-4 w-4" />
-              </PageButton>
-            </PaginationItem>
-          </>
-        )}
-      </PaginationContent>
-    </Pagination>
+                <PaginationItem>
+                  <PageButton page={number + 1}>
+                    <ChevronRight className="h-4 w-4" />
+                  </PageButton>
+                </PaginationItem>
+              </>
+            )}
+          </PaginationContent>
+        </Pagination>
+      )}
+    </>
   );
 };
 
