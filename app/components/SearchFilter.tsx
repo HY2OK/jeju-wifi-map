@@ -20,7 +20,7 @@ import { Dispatch } from "react";
 
 interface SearchFilterProps {
   category: string | undefined;
-  setCategory: Dispatch<React.SetStateAction<string | undefined>>;
+  setCategory: Dispatch<React.SetStateAction<string>>;
 }
 
 const SearchFilter = ({ category, setCategory }: SearchFilterProps) => {

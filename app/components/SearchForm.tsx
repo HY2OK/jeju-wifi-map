@@ -11,17 +11,15 @@ import getWifiData from "@/server/getWifiData";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import PaginationBar from "./PaginationBar";
 
 const SearchForm = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const params = useSearchParams();
-  const [address, setAddress] = useState(
-    params.get("addressDong") || undefined,
-  );
-  const [category, setCategory] = useState(
-    params?.get("category") || undefined,
-  );
+  const [address, setAddress] = useState(params.get("addressDong") || "");
+  const [category, setCategory] = useState(params?.get("category") || "");
+  const [number, setNumber] = useState(Number(params.get("number")) || 1);
 
   const mutation = useMutation<WifiData, unknown, Record<string, string>>({
     mutationFn: getWifiData,
@@ -30,18 +28,23 @@ const SearchForm = () => {
     },
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const getFilteredData = (pageNumber?: number) => {
+    const data: { addressDong?: string; category?: string; number?: string } =
+      {};
 
-    const data: { addressDong?: string; category?: string } = {};
-
-    if (address) data.addressDong = address;
-    if (category && category !== "전체") data.category = category;
+    if (address !== "") data.addressDong = address;
+    if (category !== "" && category !== "전체") data.category = category;
+    data.number = pageNumber ? `${pageNumber}` : `${number}`;
 
     const queryParams = new URLSearchParams(data).toString();
     router.push(`/?${queryParams}`);
 
     mutation.mutate(data);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    getFilteredData();
   };
 
   return (
@@ -68,6 +71,11 @@ const SearchForm = () => {
       <ScrollArea>
         <WifiDataList isLoading={mutation.isPending} />
       </ScrollArea>
+      <PaginationBar
+        number={number}
+        setNumber={setNumber}
+        getFilteredData={getFilteredData}
+      />
     </>
   );
 };
