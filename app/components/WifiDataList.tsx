@@ -53,8 +53,6 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
     );
   }
 
-  console.log(data?.data);
-
   return (
     <div className="flex flex-col gap-3 px-3">
       {data?.data?.map((data, index) => (
