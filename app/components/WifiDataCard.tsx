@@ -20,7 +20,7 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
       <Card
         ref={ref}
         className={cn(
-          `w-full cursor-pointer bg-card`,
+          `w-full cursor-pointer bg-card transition-all duration-500 ease-in-out`,
           data.isClicked && "border-2 border-primary",
         )}
         onClick={() => handleClick(data)}
@@ -33,14 +33,27 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
         <CardContent>
           <div className="text-xs">{data.addressDong}</div>
           <div className="text-xs">{data.addressDetail}</div>
+          {data.isClicked && (
+            <div className="mt-2 w-full text-center">
+              {data.installLocationDetail}
+            </div>
+          )}
         </CardContent>
-        <CardFooter className="flex w-full">
-          <div className="flex-1 text-xs text-muted-foreground">
-            등록일: {data.baseDate}
+        <CardFooter className="flex w-full flex-col">
+          <div className="flex w-full items-center">
+            <div className="flex-1 text-xs text-muted-foreground">
+              등록일: {data.baseDate}
+            </div>
+            <div className="ml-auto min-w-max rounded-md bg-primary px-2 py-1 text-xs text-accent">
+              {data.category}
+            </div>
           </div>
-          <div className="ml-auto min-w-max rounded-md bg-primary px-2 py-1 text-xs text-accent">
-            {data.category}
-          </div>
+          {data.isClicked && (
+            <div className="flex items-center gap-2 pt-2 text-xs text-muted-foreground">
+              <div>위도: {data.latitude}</div>
+              <div>경도: {data.longitude}</div>
+            </div>
+          )}
         </CardFooter>
       </Card>
     );

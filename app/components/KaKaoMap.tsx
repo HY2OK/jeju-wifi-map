@@ -6,13 +6,14 @@ import {
   CustomOverlayMap,
   Map,
   MapMarker,
+  Roadview,
   ZoomControl,
 } from "react-kakao-maps-sdk";
-import WifiDetailCard from "./WifiDetailCard";
 import { useEffect, useState } from "react";
 import clickMarker from "@/lib/clickMarker";
 import { useSearchParams } from "next/navigation";
 import changeSearchParams from "@/lib/changeSearchParams";
+import { Card } from "@/components/ui/card";
 
 const KaKaoMap = () => {
   const queryClient = useQueryClient();
@@ -64,7 +65,7 @@ const KaKaoMap = () => {
     >
       <ZoomControl position={"LEFT"} />
       {data?.data?.map((data, index) => (
-        <div key={index} className="relative">
+        <div key={index} className="relative transition-all">
           <MapMarker
             position={{
               lat: Number(data.latitude),
@@ -73,24 +74,36 @@ const KaKaoMap = () => {
             image={{
               src: "https://cdn-icons-png.flaticon.com/128/4852/4852997.png",
               size: {
-                width: 35,
-                height: 35,
+                width: data.isClicked ? 40 : 30,
+                height: data.isClicked ? 40 : 30,
               },
             }}
             title={data.apGroupName}
             onClick={() => clickMarker(queryClient, data)}
           />
           {data.isClicked && (
-            <CustomOverlayMap
-              position={{
-                lat: Number(data.latitude),
-                lng: Number(data.longitude),
-              }}
-              yAnchor={1}
-              xAnchor={0.5}
-            >
-              <WifiDetailCard data={data} cancelClicked={cancelClicked} />
-            </CustomOverlayMap>
+            <>
+              <Roadview
+                position={{
+                  lat: Number(data.latitude),
+                  lng: Number(data.longitude),
+                  radius: 50,
+                }}
+                className="absolute bottom-0 right-0 z-10 hidden h-[300px] w-[250px] sm:block"
+              />
+              <CustomOverlayMap
+                position={{
+                  lat: Number(data.latitude),
+                  lng: Number(data.longitude),
+                }}
+                yAnchor={2}
+                xAnchor={0.5}
+              >
+                <Card className="border-2 border-primary p-2">
+                  {data.apGroupName}
+                </Card>
+              </CustomOverlayMap>
+            </>
           )}
         </div>
       ))}
