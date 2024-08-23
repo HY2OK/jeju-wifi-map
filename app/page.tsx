@@ -20,10 +20,12 @@ export default async function Home({
   });
 
   return (
-    <>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <SideBar />
-        <main className="relative h-full w-full flex-1 p-3">
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="relative flex h-full w-full flex-col-reverse items-center gap-3 px-3 py-3 sm:flex-row">
+        <div className="h-[500px] w-full bg-background sm:h-full sm:w-[300px]">
+          <SideBar />
+        </div>
+        <main className="w-full flex-1 sm:h-full">
           <div className="absolute right-6 top-6 z-10">
             <ModeToggle />
           </div>
@@ -31,7 +33,7 @@ export default async function Home({
             <KaKaoMap />
           </div>
         </main>
-      </HydrationBoundary>
-    </>
+      </div>
+    </HydrationBoundary>
   );
 }

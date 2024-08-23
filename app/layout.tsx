@@ -20,12 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body
-        className={cn(
-          nanum.className,
-          "relative flex h-screen w-full items-center justify-center",
-        )}
-      >
+      <body className={cn(nanum.className, "relative h-screen w-full")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

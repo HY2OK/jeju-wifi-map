@@ -80,7 +80,7 @@ const PaginationBar = ({
     <>
       {data?.data.length !== 0 && (
         <Pagination>
-          <PaginationContent className="flex w-full items-center">
+          <PaginationContent className="flex w-full items-center justify-center">
             {!isNaN(totalPages) && (
               <>
                 <PaginationItem>

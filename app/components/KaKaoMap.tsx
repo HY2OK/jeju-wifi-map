@@ -14,6 +14,7 @@ import clickMarker from "@/lib/clickMarker";
 import { useSearchParams } from "next/navigation";
 import changeSearchParams from "@/lib/changeSearchParams";
 import { Card } from "@/components/ui/card";
+import { truncateString } from "@/lib/truncateString";
 
 const KaKaoMap = () => {
   const queryClient = useQueryClient();
@@ -49,7 +50,6 @@ const KaKaoMap = () => {
       className="h-full w-full rounded-lg"
       onZoomChanged={(map) => setZoom(map.getLevel())}
     >
-      <ZoomControl position={"LEFT"} />
       {data?.data?.map((data, index) => (
         <div key={index} className="relative transition-all">
           <MapMarker
@@ -85,8 +85,8 @@ const KaKaoMap = () => {
                 yAnchor={2}
                 xAnchor={0.5}
               >
-                <Card className="border-2 border-primary p-2">
-                  {data.apGroupName}
+                <Card className="flex border-2 border-primary p-2">
+                  {truncateString(data.apGroupName, 20)}
                 </Card>
               </CustomOverlayMap>
             </>

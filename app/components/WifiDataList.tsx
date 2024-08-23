@@ -37,7 +37,7 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-3 p-3">
+      <div className="flex w-full flex-col gap-3 p-3">
         {[1, 2, 3].map((e) => (
           <LoadingSkeleton key={e} />
         ))}
