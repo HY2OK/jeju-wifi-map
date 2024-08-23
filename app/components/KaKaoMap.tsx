@@ -30,20 +30,6 @@ const KaKaoMap = () => {
   });
   const [zoom, setZoom] = useState(10);
 
-  const cancelClicked = () => {
-    const cancel = data?.data.map((data) => {
-      if (data.isClicked) {
-        return {
-          ...data,
-          isClicked: false,
-        };
-      }
-      return data;
-    });
-
-    queryClient.setQueryData(["wifi"], { ...data, data: cancel });
-  };
-
   useEffect(() => {
     const clickedData = data?.data?.find((data) => data.isClicked);
     if (clickedData) {
