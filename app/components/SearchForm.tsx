@@ -69,7 +69,7 @@ const SearchForm = () => {
         <SearchFilter category={category} setCategory={setCategory} />
       </form>
       <ScrollArea>
-        <WifiDataList isLoading={mutation.isPending} />
+        <WifiDataList submitPending={mutation.isPending} />
       </ScrollArea>
       <PaginationBar
         number={number}

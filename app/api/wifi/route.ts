@@ -21,6 +21,7 @@ export async function GET(request: Request) {
         params: queryParams,
       },
     );
+
     return NextResponse.json(response.data);
     // return NextResponse.json(testData);
   } catch (error) {

@@ -10,12 +10,12 @@ import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import changeSearchParams from "@/lib/changeSearchParams";
 
-const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
+const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
   const queryClient = useQueryClient();
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const searchParams = useSearchParams();
 
-  const { data } = useQuery({
+  const { data, isLoading: loading } = useQuery({
     queryKey: ["wifi"],
     queryFn: () => getWifiData(changeSearchParams(searchParams)),
   });
@@ -35,9 +35,9 @@ const WifiDataList = ({ isLoading }: { isLoading: boolean }) => {
     }
   }, [data]);
 
-  if (isLoading) {
+  if (submitPending || loading) {
     return (
-      <div className="flex w-full flex-col gap-3 p-3">
+      <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">
         {[1, 2, 3].map((e) => (
           <LoadingSkeleton key={e} />
         ))}
