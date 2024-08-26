@@ -8,8 +8,8 @@ import {
   PaginationItem,
 } from "@/components/ui/pagination";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import changeSearchParams from "@/lib/changeSearchParams";
 import getPageNumbers from "@/lib/getPageNumbers";
+import searchParamsToObject from "@/lib/searchParamsToObject";
 import getWifiData from "@/server/getWifiData";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -32,7 +32,7 @@ const PaginationBar = ({
 
   const { data } = useQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(changeSearchParams(searchParams)),
+    queryFn: () => getWifiData(searchParamsToObject(searchParams)),
   });
 
   const totalPages = Math.ceil(data?.totCnt! / 10);

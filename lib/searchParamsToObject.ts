@@ -1,4 +1,4 @@
-const changeSearchParams = (searchParams: URLSearchParams) => {
+const searchParamsToObject = (searchParams: URLSearchParams) => {
   const params: Record<string, string> = {};
   searchParams.forEach((value, key) => {
     params[key] = value;
@@ -6,4 +6,4 @@ const changeSearchParams = (searchParams: URLSearchParams) => {
   return params;
 };
 
-export default changeSearchParams;
+export default searchParamsToObject;

@@ -5,6 +5,7 @@ const getWifiData = async (
   params?: Record<string, string>,
 ): Promise<WifiData> => {
   const queryParams = params ? new URLSearchParams(params) : "";
+  console.log(queryParams);
 
   const response = await axios.get(`/api/wifi`, {
     headers: {

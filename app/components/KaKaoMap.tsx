@@ -12,9 +12,9 @@ import {
 import { useEffect, useState } from "react";
 import clickMarker from "@/lib/clickMarker";
 import { useSearchParams } from "next/navigation";
-import changeSearchParams from "@/lib/changeSearchParams";
 import { Card } from "@/components/ui/card";
 import { truncateString } from "@/lib/truncateString";
+import searchParamsToObject from "@/lib/searchParamsToObject";
 
 const KaKaoMap = () => {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ const KaKaoMap = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(changeSearchParams(searchParams)),
+    queryFn: () => getWifiData(searchParamsToObject(searchParams)),
   });
 
   const [center, setCenter] = useState({
