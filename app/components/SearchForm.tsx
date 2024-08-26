@@ -21,7 +21,7 @@ const SearchForm = () => {
   const [category, setCategory] = useState(params?.get("category") || "");
   const [number, setNumber] = useState(Number(params.get("number")) || 1);
 
-  const mutation = useMutation<WifiData, unknown, Record<string, string>>({
+  const mutation = useMutation<WifiData, unknown, URLSearchParams>({
     mutationFn: getWifiData,
     onSuccess: (result) => {
       queryClient.setQueryData(["wifi"], result);
@@ -36,10 +36,10 @@ const SearchForm = () => {
     if (category !== "" && category !== "전체") data.category = category;
     data.number = pageNumber ? `${pageNumber}` : `${number}`;
 
-    const queryParams = new URLSearchParams(data).toString();
-    router.push(`/?${queryParams}`);
+    const queryParams = new URLSearchParams(data);
+    router.push(`/?${queryParams.toString()}`);
 
-    mutation.mutate(data);
+    mutation.mutate(queryParams);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
