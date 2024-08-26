@@ -7,11 +7,11 @@ import { Search } from "lucide-react";
 import WifiDataList from "./WifiDataList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { WifiData } from "@/types/type";
-import getWifiData from "@/server/getWifiData";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import PaginationBar from "./PaginationBar";
+import getWifiData from "../actions/getWifiData";
 
 const SearchForm = () => {
   const queryClient = useQueryClient();

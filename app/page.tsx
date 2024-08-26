@@ -5,8 +5,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import getWifiData from "@/server/getWifiData";
 import KaKaoMap from "./components/KaKaoMap";
+import getWifiData from "./actions/getWifiData";
 
 export default async function Home({
   searchParams,

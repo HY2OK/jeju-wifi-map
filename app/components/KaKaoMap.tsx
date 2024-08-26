@@ -1,6 +1,5 @@
 "use client";
 
-import getWifiData from "@/server/getWifiData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   CustomOverlayMap,
@@ -13,6 +12,7 @@ import clickMarker from "@/lib/clickMarker";
 import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { truncateString } from "@/lib/truncateString";
+import getWifiData from "../actions/getWifiData";
 
 const KaKaoMap = () => {
   const queryClient = useQueryClient();

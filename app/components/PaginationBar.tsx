@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/pagination";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import getPageNumbers from "@/lib/getPageNumbers";
-import getWifiData from "@/server/getWifiData";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
+import getWifiData from "../actions/getWifiData";
 
 interface PaginationBarProps {
   number: number;

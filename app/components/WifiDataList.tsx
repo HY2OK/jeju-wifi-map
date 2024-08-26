@@ -1,6 +1,5 @@
 "use client";
 
-import getWifiData from "@/server/getWifiData";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import WifiDataCard from "./WifiDataCard";
 import LoadingSkeleton from "./LoadingSkeleton";
@@ -8,6 +7,7 @@ import { WifiDetail } from "@/types/type";
 import clickMarker from "@/lib/clickMarker";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import getWifiData from "../actions/getWifiData";
 
 const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
   const queryClient = useQueryClient();
