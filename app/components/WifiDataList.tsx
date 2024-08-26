@@ -37,9 +37,7 @@ const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
   if (submitPending || loading) {
     return (
       <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">
-        {[1, 2, 3].map((e) => (
-          <LoadingSkeleton key={e} />
-        ))}
+        <LoadingSkeleton />
       </div>
     );
   }
