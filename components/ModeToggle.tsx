@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -11,20 +10,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
 
 export function ModeToggle() {
   const { resolvedTheme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // 컴포넌트가 마운트될 때만 클라이언트 사이드에서 테마 적용
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
-  // 초기 로딩 시 서버사이드 렌더링을 회피하기 위한 조건
-  if (!mounted) {
-    return null;
-  }
+  if (!mounted) return null;
 
   return (
     <DropdownMenu>
