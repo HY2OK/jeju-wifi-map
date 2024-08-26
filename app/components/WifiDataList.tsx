@@ -8,7 +8,6 @@ import { WifiDetail } from "@/types/type";
 import clickMarker from "@/lib/clickMarker";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import searchParamsToObject from "@/lib/searchParamsToObject";
 
 const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
   const queryClient = useQueryClient();
@@ -17,7 +16,7 @@ const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
 
   const { data, isLoading: loading } = useQuery({
     queryKey: ["wifi"],
-    queryFn: () => getWifiData(searchParamsToObject(searchParams)),
+    queryFn: () => getWifiData(searchParams),
   });
 
   const handleClick = (clickedData: WifiDetail) => {

@@ -2,10 +2,9 @@ import { WifiData } from "@/types/type";
 import axios from "axios";
 
 const getWifiData = async (
-  params?: Record<string, string>,
+  searchParams: URLSearchParams,
 ): Promise<WifiData> => {
-  const queryParams = params ? new URLSearchParams(params) : "";
-  console.log(queryParams);
+  const queryParams = new URLSearchParams(searchParams.toString());
 
   const response = await axios.get(`/api/wifi`, {
     headers: {
