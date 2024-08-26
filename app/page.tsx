@@ -11,7 +11,7 @@ import KaKaoMap from "./components/KaKaoMap";
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: Record<string, string>;
+  searchParams: URLSearchParams;
 }) {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
