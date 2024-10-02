@@ -1,6 +1,7 @@
 import wifiIcon from "@/asset/free-icon-wifi-4852997.png";
 import Image from "next/image";
 import SearchForm from "./SearchForm";
+import UserCard from "./UserCard";
 
 const SideBar = () => {
   return (
@@ -10,6 +11,7 @@ const SideBar = () => {
           <Image src={wifiIcon} alt="logo" width={40} height={40} />
           제주 공공 와이파이
         </h1>
+        <UserCard />
       </div>
       <SearchForm />
     </div>
