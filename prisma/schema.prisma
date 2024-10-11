@@ -15,6 +15,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  likedPosts    LikedPost[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
@@ -78,4 +79,40 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, credentialID])
+}
+
+model Post {
+  id                    String @id @default(auto()) @map("_id") @db.ObjectId
+  baseDate              String // 설치 날짜
+  macAddress            String // MAC 주소 (암호화된 형태)
+  apGroupName           String // AP 그룹 이름 (설치 장소)
+  installLocationDetail String // 설치 위치 세부 정보
+  category              String // 카테고리 (대분류)
+  categoryDetail        String // 카테고리 세부 정보 (소분류)
+  addressDong           String // 주소 (읍/면/동)
+  addressDetail         String // 주소 (세부 주소)
+  latitude              String // 위도
+  longitude             String // 경도
+
+  likedBy   LikedPost[] // User와의 연결
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([macAddress, baseDate])
+}
+
+model LikedPost {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String @db.ObjectId
+  postId     String @db.ObjectId
+  macAddress String
+  baseDate   String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  // 복합 unique index를 설정하여 같은 유저가 같은 포스트를 중복해서 찜하지 못하게 함
+  @@unique([userId, postId])
 }

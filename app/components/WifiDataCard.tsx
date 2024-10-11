@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -8,6 +10,7 @@ import { truncateString } from "@/lib/truncateString";
 import { cn } from "@/lib/utils";
 import { WifiDetail } from "@/types/type";
 import { forwardRef } from "react";
+import LikedButton from "./LikedButton";
 
 interface WifiDataCardProps {
   data: WifiDetail;
@@ -26,8 +29,9 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
         onClick={() => handleClick(data)}
       >
         <CardHeader className="w-full font-bold">
-          <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
-            {truncateString(data.apGroupName, 10)}
+          <div className="flex justify-between">
+            <span>{truncateString(data.apGroupName, 10)}</span>
+            <LikedButton data={data} />
           </div>
         </CardHeader>
         <CardContent>
