@@ -7,7 +7,7 @@ import WifiDataList from "./WifiDataList";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaginationBar from "./PaginationBar";
 import useWifiMutation from "@/hooks/useWifiMutation";
 
@@ -21,16 +21,14 @@ const SearchForm = () => {
   const mutation = useWifiMutation();
 
   const getFilteredData = (pageNumber?: number) => {
-    const data: { addressDong?: string; category?: string; number?: string } =
-      {};
+    const params = new URLSearchParams({
+      ...(address && { addressDong: address }),
+      ...(category && category !== "전체" && { category }),
+      ...(searchParams.get("liked") && { liked: "true" }),
+      number: String(pageNumber || number),
+    });
 
-    if (address !== "") data.addressDong = address;
-    if (category !== "" && category !== "전체") data.category = category;
-    data.number = pageNumber ? `${pageNumber}` : `${number}`;
-
-    const params = new URLSearchParams(data);
     router.push(`/?${params.toString()}`);
-
     mutation.mutate(params);
   };
 
@@ -38,6 +36,12 @@ const SearchForm = () => {
     event.preventDefault();
     getFilteredData();
   };
+
+  useEffect(() => {
+    setAddress(searchParams.get("addressDong") || "");
+    setCategory(searchParams.get("category") || "");
+    setNumber(Number(searchParams.get("number")) || 1);
+  }, [searchParams]);
 
   return (
     <>

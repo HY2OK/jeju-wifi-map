@@ -1,8 +1,8 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import filterWifiData from "@/lib/filterWifiData";
 import { prisma } from "@/lib/prisma";
-import transformToWifiDetail from "@/lib/transformToWifiData";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
@@ -28,10 +28,10 @@ export async function GET(request: Request) {
       });
 
       const posts = likedPosts.map((post) => post.post);
-      const data = transformToWifiDetail(posts);
+      const data = filterWifiData(posts, searchParams);
 
       return NextResponse.json({
-        totCnt: data.length,
+        totCnt: posts.length,
         hasMore: true,
         data,
       });
