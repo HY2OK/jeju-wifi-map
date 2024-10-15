@@ -1,10 +1,14 @@
 "use server";
 
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import transformToWifiDetail from "@/lib/transformToWifiData";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  const session = await auth();
 
   const queryParams: Record<string, string> = {};
 
@@ -13,6 +17,26 @@ export async function GET(request: Request) {
   });
 
   try {
+    if (searchParams.get("liked")) {
+      const likedPosts = await prisma.likedPost.findMany({
+        where: {
+          userId: session?.user?.id,
+        },
+        include: {
+          post: true,
+        },
+      });
+
+      const posts = likedPosts.map((post) => post.post);
+      const data = transformToWifiDetail(posts);
+
+      return NextResponse.json({
+        totCnt: data.length,
+        hasMore: true,
+        data,
+      });
+    }
+
     const response = await axios.get(
       `https://open.jejudatahub.net/api/proxy/Dtb18ta1btbD1Da1a81aaDttab6tDabb/${process.env.WIFI_KEY}`,
       {

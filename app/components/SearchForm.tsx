@@ -2,31 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import WifiDataList from "./WifiDataList";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WifiData } from "@/types/type";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import PaginationBar from "./PaginationBar";
-import getWifiData from "../actions/getWifiData";
+import useWifiMutation from "@/hooks/useWifiMutation";
 
 const SearchForm = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [address, setAddress] = useState(searchParams.get("addressDong") || "");
   const [category, setCategory] = useState(searchParams?.get("category") || "");
   const [number, setNumber] = useState(Number(searchParams.get("number")) || 1);
 
-  const mutation = useMutation<WifiData, unknown, URLSearchParams>({
-    mutationFn: getWifiData,
-    onSuccess: (result) => {
-      queryClient.setQueryData(["wifi"], result);
-    },
-  });
+  const mutation = useWifiMutation();
 
   const getFilteredData = (pageNumber?: number) => {
     const data: { addressDong?: string; category?: string; number?: string } =
