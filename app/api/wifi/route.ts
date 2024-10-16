@@ -18,6 +18,13 @@ export async function GET(request: Request) {
 
   try {
     if (searchParams.get("liked")) {
+      const totCnt = await prisma.likedPost.count({
+        where: {
+          userId: session?.user?.id,
+        },
+      });
+      const currentPage = Number(searchParams.get("number")) || 1;
+
       const likedPosts = await prisma.likedPost.findMany({
         where: {
           userId: session?.user?.id,
@@ -25,13 +32,18 @@ export async function GET(request: Request) {
         include: {
           post: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
+        skip: (currentPage - 1) * 10,
+        take: 10,
       });
 
       const posts = likedPosts.map((post) => post.post);
       const data = filterWifiData(posts, searchParams);
 
       return NextResponse.json({
-        totCnt: posts.length,
+        totCnt: totCnt,
         hasMore: true,
         data,
       });

@@ -8,33 +8,23 @@ function filterWifiData(
   likedPosts: WifiDetailWithId[],
   searchParams: URLSearchParams,
 ): WifiDetail[] {
-  const pageSize = 10;
-  const pageNumber = Math.max(Number(searchParams.get("number")) || 1, 1); // 최소값 1 보장
+  const category = searchParams.get("category");
+  const addressDong = searchParams.get("addressDong");
 
-  // 카테고리로 필터링
-  const filteredCategory = (posts: WifiDetailWithId[]) => {
-    const category = searchParams.get("category");
-    return category
-      ? posts.filter((post) => post.category === category)
-      : posts;
-  };
-
-  // 주소로 필터링
-  const filteredAddressDong = (posts: WifiDetailWithId[]) => {
-    const addressDong = searchParams.get("addressDong");
-    return addressDong
-      ? posts.filter((post) => post.addressDong.includes(addressDong))
-      : posts;
+  // 필터링 함수
+  const applyFilters = (posts: WifiDetailWithId[]) => {
+    return posts.filter((post) => {
+      const matchesCategory = !category || post.category === category;
+      const matchesAddressDong =
+        !addressDong || post.addressDong.includes(addressDong);
+      return matchesCategory && matchesAddressDong;
+    });
   };
 
   // 필터 적용
-  const filteredPosts = filteredAddressDong(filteredCategory(likedPosts));
+  const filteredPosts = applyFilters(likedPosts);
 
-  // 페이지네이션
-  const startIndex = (pageNumber - 1) * pageSize;
-  const paginatedPosts = filteredPosts.slice(startIndex, startIndex + pageSize);
-
-  return paginatedPosts.map((post: WifiDetailWithId) => ({
+  return filteredPosts.map((post: WifiDetailWithId) => ({
     baseDate: post.baseDate || "",
     macAddress: post.macAddress || "",
     apGroupName: post.apGroupName || "",
