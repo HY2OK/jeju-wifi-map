@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import WifiDataList from "./WifiDataList";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchFilter from "./SearchFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -64,9 +63,8 @@ const SearchForm = () => {
 
         <SearchFilter category={category} setCategory={setCategory} />
       </form>
-      <ScrollArea>
-        <WifiDataList submitPending={mutation.isPending} />
-      </ScrollArea>
+
+      <WifiDataList submitPending={mutation.isPending} />
       <PaginationBar
         number={number}
         setNumber={setNumber}

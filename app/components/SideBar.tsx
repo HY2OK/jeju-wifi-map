@@ -2,6 +2,7 @@ import wifiIcon from "@/asset/free-icon-wifi-4852997.png";
 import Image from "next/image";
 import SearchForm from "./SearchForm";
 import UserCard from "./UserCard";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 const SideBar = () => {
   return (
