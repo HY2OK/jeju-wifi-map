@@ -1,10 +1,8 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import WifiDataCard from "./WifiDataCard";
 import LoadingSkeleton from "./LoadingSkeleton";
-import { WifiDetail } from "@/types/type";
-import clickMarker from "@/lib/clickMarker";
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import getWifiData from "../actions/getWifiData";
@@ -12,24 +10,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
-  const queryClient = useQueryClient();
+const WifiDataList = ({ mutationPending }: { mutationPending: boolean }) => {
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const {
-    data,
-    isLoading: loading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["wifi"],
     queryFn: () => getWifiData(searchParams),
   });
-
-  const handleClick = (clickedData: WifiDetail) => {
-    return clickMarker(queryClient, clickedData);
-  };
 
   useEffect(() => {
     const dataIndex = data?.data?.findIndex((data) => data.isClicked === true);
@@ -42,7 +31,7 @@ const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
     }
   }, [data]);
 
-  if (submitPending || loading) {
+  if (mutationPending || isLoading) {
     return (
       <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">
         <LoadingSkeleton />
@@ -74,7 +63,6 @@ const WifiDataList = ({ submitPending }: { submitPending: boolean }) => {
           <WifiDataCard
             data={data}
             key={index}
-            handleClick={handleClick}
             ref={(el) => {
               cardRefs.current[index] = el!;
             }}

@@ -64,7 +64,7 @@ const SearchForm = () => {
         <SearchFilter category={category} setCategory={setCategory} />
       </form>
 
-      <WifiDataList submitPending={mutation.isPending} />
+      <WifiDataList mutationPending={mutation.isPending} />
       <PaginationBar
         number={number}
         setNumber={setNumber}
