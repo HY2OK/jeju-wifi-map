@@ -46,7 +46,7 @@ const SearchForm = () => {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center justify-center gap-2 p-3"
+        className="flex flex-col items-center justify-center gap-2 px-3 py-2"
       >
         <div className="flex w-full items-center justify-center gap-2">
           <Input
