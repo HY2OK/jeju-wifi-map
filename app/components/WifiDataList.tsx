@@ -33,9 +33,11 @@ const WifiDataList = ({ mutationPending }: { mutationPending: boolean }) => {
 
   if (mutationPending || isLoading) {
     return (
-      <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">
-        <LoadingSkeleton />
-      </div>
+      <ScrollArea className="flex-1">
+        <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">
+          <LoadingSkeleton />
+        </div>
+      </ScrollArea>
     );
   }
 
