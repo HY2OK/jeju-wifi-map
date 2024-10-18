@@ -18,7 +18,7 @@ const UserMenu = async () => {
   const handleAuth = async () => {
     "use server";
     if (session) {
-      await signOut();
+      await signOut({ redirectTo: "/" });
     } else {
       await signIn("google");
     }

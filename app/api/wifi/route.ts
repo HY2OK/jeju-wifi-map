@@ -17,7 +17,7 @@ export async function GET(request: Request) {
   });
 
   try {
-    if (searchParams.get("liked")) {
+    if (session && searchParams.get("liked")) {
       const totCnt = await prisma.likedPost.count({
         where: {
           userId: session?.user?.id,
