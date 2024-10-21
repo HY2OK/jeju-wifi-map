@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -8,14 +10,18 @@ import { truncateString } from "@/lib/truncateString";
 import { cn } from "@/lib/utils";
 import { WifiDetail } from "@/types/type";
 import { forwardRef } from "react";
+import LikedButton from "./LikedButton";
+import { useQueryClient } from "@tanstack/react-query";
+import clickMarker from "@/lib/clickMarker";
 
 interface WifiDataCardProps {
   data: WifiDetail;
-  handleClick: (data: WifiDetail) => void;
 }
 
 const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
-  ({ data, handleClick }, ref) => {
+  ({ data }, ref) => {
+    const queryClient = useQueryClient();
+
     return (
       <Card
         ref={ref}
@@ -23,11 +29,12 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
           `w-full cursor-pointer bg-card transition-all duration-500 ease-in-out`,
           data.isClicked && "border-2 border-primary",
         )}
-        onClick={() => handleClick(data)}
+        onClick={() => clickMarker(queryClient, data)}
       >
         <CardHeader className="w-full font-bold">
-          <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
-            {truncateString(data.apGroupName, 10)}
+          <div className="flex justify-between">
+            <span>{truncateString(data.apGroupName, 10)}</span>
+            <LikedButton data={data} />
           </div>
         </CardHeader>
         <CardContent>
