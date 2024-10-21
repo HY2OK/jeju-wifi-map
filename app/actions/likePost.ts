@@ -5,7 +5,6 @@ import { WifiDetail } from "@/types/type";
 
 export const likePost = async (userId: string, postData: WifiDetail) => {
   try {
-    // Post 존재 여부 확인 및 없을 경우 생성
     const existPost = await prisma.post.upsert({
       where: {
         macAddress_baseDate: {
@@ -25,7 +24,7 @@ export const likePost = async (userId: string, postData: WifiDetail) => {
         latitude: postData.latitude,
         longitude: postData.longitude,
       },
-      update: {}, // 이미 존재하면 업데이트는 하지 않음
+      update: {},
     });
 
     const existLikedPost = await prisma.likedPost.findUnique({
@@ -39,13 +38,12 @@ export const likePost = async (userId: string, postData: WifiDetail) => {
 
     if (existLikedPost) throw new Error("이미 이 포스트를 좋아요 했습니다.");
 
-    // 새로운 찜 추가
     const likedPost = await prisma.likedPost.create({
       data: {
         userId,
         baseDate: postData.baseDate,
         macAddress: postData.macAddress,
-        postId: existPost.id, // 연결된 포스트 ID
+        postId: existPost.id,
       },
     });
 
