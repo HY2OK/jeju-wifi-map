@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   CustomOverlayMap,
   Map,
@@ -8,14 +8,14 @@ import {
   Roadview,
 } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
-import clickMarker from "@/lib/clickMarker";
 import { useSearchParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { truncateString } from "@/lib/truncateString";
 import getWifiData from "../actions/getWifiData";
+import useClickPost from "@/hooks/useClickPost";
 
 const KaKaoMap = () => {
-  const queryClient = useQueryClient();
+  const { clickPost } = useClickPost();
   const searchParams = useSearchParams();
 
   const { data, isLoading } = useQuery({
@@ -64,7 +64,7 @@ const KaKaoMap = () => {
                 },
               }}
               title={data.apGroupName}
-              onClick={() => clickMarker(queryClient, data)}
+              onClick={() => clickPost(data)}
             />
             {data.isClicked && (
               <>

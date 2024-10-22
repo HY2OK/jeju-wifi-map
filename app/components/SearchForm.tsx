@@ -19,7 +19,7 @@ const SearchForm = () => {
 
   const mutation = useWifiMutation();
 
-  const getFilteredData = (pageNumber?: number) => {
+  const getFilteredData = async (pageNumber?: number) => {
     const params = new URLSearchParams({
       ...(address && { addressDong: address }),
       ...(category && category !== "전체" && { category }),
@@ -27,13 +27,13 @@ const SearchForm = () => {
       number: String(pageNumber || number),
     });
 
+    await mutation.mutateAsync(params);
     router.push(`/?${params.toString()}`);
-    mutation.mutate(params);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    getFilteredData();
+    await getFilteredData();
   };
 
   useEffect(() => {

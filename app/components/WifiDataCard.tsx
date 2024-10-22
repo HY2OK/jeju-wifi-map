@@ -11,8 +11,7 @@ import { cn } from "@/lib/utils";
 import { WifiDetail } from "@/types/type";
 import { forwardRef } from "react";
 import LikedButton from "./LikedButton";
-import { useQueryClient } from "@tanstack/react-query";
-import clickMarker from "@/lib/clickMarker";
+import useClickPost from "@/hooks/useClickPost";
 
 interface WifiDataCardProps {
   data: WifiDetail;
@@ -20,7 +19,7 @@ interface WifiDataCardProps {
 
 const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
   ({ data }, ref) => {
-    const queryClient = useQueryClient();
+    const { clickPost } = useClickPost();
 
     return (
       <Card
@@ -29,11 +28,15 @@ const WifiDataCard = forwardRef<HTMLDivElement, WifiDataCardProps>(
           `w-full cursor-pointer bg-card transition-all duration-500 ease-in-out`,
           data.isClicked && "border-2 border-primary",
         )}
-        onClick={() => clickMarker(queryClient, data)}
+        onClick={() => clickPost(data)}
       >
         <CardHeader className="w-full font-bold">
           <div className="flex justify-between">
-            <span>{truncateString(data.apGroupName, 10)}</span>
+            <span className="flex-1">
+              {data.isClicked
+                ? data.apGroupName
+                : truncateString(data.apGroupName, 10)}
+            </span>
             <LikedButton data={data} />
           </div>
         </CardHeader>
