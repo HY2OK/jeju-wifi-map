@@ -1,5 +1,5 @@
+import { prisma } from "@/lib/prisma";
 import { WifiData } from "@/types/type";
-import { prisma } from "./prisma";
 
 const isLikedPost = async (userId: string, data: WifiData) => {
   const likedPosts = await prisma.likedPost.findMany({

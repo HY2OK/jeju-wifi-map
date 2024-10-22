@@ -1,8 +1,8 @@
 "use server";
 
+import isLikedPost from "@/app/actions/isLikedPost";
 import { auth } from "@/lib/auth";
 import filterWifiData from "@/lib/filterWifiData";
-import isLikedPost from "@/lib/isLikedPost";
 import { prisma } from "@/lib/prisma";
 import axios from "axios";
 import { NextResponse } from "next/server";
