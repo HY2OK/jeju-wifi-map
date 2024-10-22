@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const LoadingSkeleton = () => {
   return (
     <>
-      {[1, 2, 3].map((e) => (
+      {Array.from({ length: 10 }, (_, idx) => idx).map((e) => (
         <Skeleton
           className="flex h-[178px] w-full items-center justify-center rounded-lg bg-background"
           key={e}
