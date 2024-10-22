@@ -10,6 +10,7 @@ export interface WifiDetail {
   latitude: string; // 위도
   longitude: string; // 경도
   isClicked?: boolean;
+  isLiked?: boolean;
 }
 
 export interface WifiData {
