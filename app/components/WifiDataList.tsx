@@ -9,13 +9,19 @@ import getWifiData from "../actions/getWifiData";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useLoadingStore } from "@/lib/loadingStore";
 
 const WifiDataList = ({ mutationPending }: { mutationPending: boolean }) => {
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
+  const isLoading = useLoadingStore((state) => state.isLoading);
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data,
+    isLoading: queryLoading,
+    error,
+  } = useQuery({
     queryKey: ["wifi"],
     queryFn: () => getWifiData(searchParams),
   });
@@ -31,7 +37,7 @@ const WifiDataList = ({ mutationPending }: { mutationPending: boolean }) => {
     }
   }, [data]);
 
-  if (mutationPending || isLoading) {
+  if (mutationPending || isLoading || queryLoading) {
     return (
       <ScrollArea className="flex-1">
         <div className="flex w-full flex-col gap-3 px-3 sm:w-[300px]">

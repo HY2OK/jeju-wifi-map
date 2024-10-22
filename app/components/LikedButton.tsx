@@ -1,56 +1,52 @@
 "use client";
 
-import { WifiDetail } from "@/types/type";
+import { WifiData, WifiDetail } from "@/types/type";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Heart } from "lucide-react";
-import { checkLikedStatus } from "../actions/checkLikedStatus";
 import { likePost } from "../actions/likePost";
 import { unlikePost } from "../actions/unlikePost";
+import { useQueryClient } from "@tanstack/react-query";
 
 const LikedButton = ({ data }: { data: WifiDetail }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const queryClient = useQueryClient();
   const { data: session } = useSession();
 
-  const handleLikePost = (event: React.MouseEvent<SVGSVGElement>) => {
+  const handleLikeToggle = async (event: React.MouseEvent<SVGSVGElement>) => {
     event.stopPropagation();
-    if (session?.user?.id) likePost(session?.user?.id, data);
-    setIsLiked(() => true);
+    if (!session?.user?.id) return;
+
+    const isCurrentlyLiked = data.isLiked;
+
+    if (isCurrentlyLiked) {
+      await unlikePost(session.user.id, data);
+    } else {
+      await likePost(session.user.id, data);
+    }
+
+    queryClient.setQueryData(["wifi"], (oldData: WifiData | undefined) => {
+      if (!oldData) return oldData;
+
+      return {
+        ...oldData,
+        data: oldData.data.map((post: WifiDetail) =>
+          post.macAddress === data.macAddress && post.baseDate === data.baseDate
+            ? { ...post, isLiked: !isCurrentlyLiked }
+            : post,
+        ),
+      };
+    });
   };
-
-  const handleUnlikePost = (event: React.MouseEvent<SVGSVGElement>) => {
-    event.stopPropagation();
-    if (session?.user?.id) unlikePost(session?.user?.id, data);
-    setIsLiked(() => false);
-  };
-
-  useEffect(() => {
-    const checkLiked = async () => {
-      if (session?.user?.id) {
-        const post = await checkLikedStatus(
-          session.user.id,
-          data.macAddress,
-          data.baseDate,
-        );
-        setIsLiked(() => (post ? true : false));
-      }
-    };
-
-    checkLiked();
-  }, [data.baseDate, data.macAddress, session]);
 
   if (!session) return null;
 
   return (
     <>
-      {isLiked ? (
-        <Heart
-          className="w-5 fill-red-500 text-red-500"
-          onClick={handleUnlikePost}
-        />
-      ) : (
-        <Heart className="w-5 text-red-500" onClick={handleLikePost} />
-      )}
+      <Heart
+        className={`w-5 ${data.isLiked ? "fill-red-500 text-red-500" : "text-red-500"}`}
+        onClick={handleLikeToggle}
+        style={{ cursor: "pointer" }}
+      />
     </>
   );
 };

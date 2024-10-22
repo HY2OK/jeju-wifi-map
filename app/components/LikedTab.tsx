@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { useLoadingStore } from "@/lib/loadingStore";
 
 const LikedTab = () => {
   const { data: session } = useSession();
@@ -14,13 +15,16 @@ const LikedTab = () => {
   const router = useRouter();
   const isChecked = searchParams.get("liked") === "true";
   const mutation = useWifiMutation();
+  const setLoading = useLoadingStore((state) => state.setLoading);
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange = async () => {
+    setLoading(true);
     const data: { liked?: string } = !isChecked ? { liked: "true" } : {};
     const params = new URLSearchParams(data);
 
     router.push(`/?${params.toString()}`);
-    mutation.mutate(params);
+    await mutation.mutateAsync(params);
+    setLoading(false);
   };
 
   if (!session) return;
